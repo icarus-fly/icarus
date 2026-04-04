@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bio Report Decoder — Understand Your Lab Results</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Design tokens ─────────────────────────────────────────── */
+    :root {
+      --bg:          #F7F6F2;
+      --surface:     #FFFFFF;
+      --surface-alt: #F0F4F1;
+      --green-deep:  #1B4B3A;
+      --green-mid:   #2E7D5E;
+      --green-light: #D1EAE0;
+      --text-main:   #111816;
+      --text-muted:  #6B7B74;
+      --text-light:  #9EADA8;
+      --border:      #DDE5E2;
+      --radius-sm:   6px;
+      --radius-md:   12px;
+      --radius-lg:   20px;
+
+      --normal-bg:   #ECFDF5; --normal-text:  #065F46; --normal-border: #A7F3D0;
+      --low-bg:      #EFF6FF; --low-text:     #1E40AF; --low-border:    #BFDBFE;
+      --slight-bg:   #FFFBEB; --slight-text:  #92400E; --slight-border: #FDE68A;
+      --high-bg:     #FEF2F2; --high-text:    #991B1B; --high-border:   #FECACA;
+    }
+
+    /* ── Reset / base ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 400;
+      background: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    /* ── Layout ────────────────────────────────────────────────── */
+    .page-wrap { max-width: 740px; margin: 0 auto; padding: 0 20px 80px; }
+
+    /* ── Header ────────────────────────────────────────────────── */
+    header {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+    .header-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green-mid);
+      margin-bottom: 10px;
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--green-deep);
+      margin-bottom: 12px;
+    }
+    header p {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.65;
+      max-width: 520px;
+    }
+    header::after {
+      content: '';
+      display: block;
+      width: 48px;
+      height: 3px;
+      background: var(--green-mid);
+      border-radius: 2px;
+      margin-top: 28px;
+    }
+
+    /* ── Input card ────────────────────────────────────────────── */
+    .input-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      margin-bottom: 24px;
+    }
+
+    /* ── Mode toggle ───────────────────────────────────────────── */
+    .mode-toggle {
+      display: flex;
+      gap: 4px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 22px;
+      width: fit-content;
+    }
+    .mode-btn {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 18px;
+      border: none;
+      border-radius: 7px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-muted);
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .mode-btn svg { flex-shrink: 0; }
+    .mode-btn.active {
+      background: var(--surface);
+      color: var(--green-deep);
+      font-weight: 500;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+    }
+
+    /* ── Paste pane ────────────────────────────────────────────── */
+    .input-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      letter-spacing: 0.02em;
+    }
+    textarea {
+      width: 100%;
+      height: 220px;
+      resize: vertical;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12.5px;
+      line-height: 1.75;
+      color: var(--text-main);
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    textarea:focus {
+      border-color: var(--green-mid);
+      box-shadow: 0 0 0 3px rgba(46, 125, 94, 0.12);
+    }
+    textarea::placeholder { color: var(--text-light); font-size: 12px; }
+    .char-count {
+      font-size: 11px;
+      color: var(--text-light);
+      text-align: right;
+      margin-top: 6px;
+    }
+
+    /* ── Extracted-from-PDF indicator ──────────────────────────── */
+    .pdf-source-banner {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      background: var(--green-light);
+      border: 1px solid #A8D5C5;
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      font-size: 12px;
+      color: var(--green-deep);
+      margin-bottom: 10px;
+    }
+    .pdf-source-banner svg { flex-shrink: 0; }
+
+    /* ── PDF pane ──────────────────────────────────────────────── */
+    #pdf-pane { display: none; }
+
+    .drop-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-md);
+      padding: 40px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      background: var(--surface-alt);
+    }
+    .drop-zone:hover,
+    .drop-zone.dragover {
+      border-color: var(--green-mid);
+      background: var(--green-light);
+    }
+    .drop-zone input[type="file"] { display: none; }
+    .drop-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 14px;
+      background: var(--green-light);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .drop-zone p.drop-main {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+    .drop-zone p.drop-sub {
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    /* ── PDF status ────────────────────────────────────────────── */
+    #pdf-status { margin-top: 14px; display: none; }
+    .pdf-file-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+    }
+    .pdf-file-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-main);
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .pdf-file-size { font-size: 11px; color: var(--text-light); }
+    .pdf-progress {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 10px;
+      font-style: italic;
+    }
+    .mini-spinner {
+      width: 14px; height: 14px;
+      border: 2px solid var(--border);
+      border-top-color: var(--green-mid);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+      flex-shrink: 0;
+    }
+    .pdf-error {
+      display: none;
+      background: var(--high-bg);
+      border: 1px solid var(--high-border);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--high-text);
+      margin-top: 10px;
+    }
+
+    /* ── Decode button ─────────────────────────────────────────── */
+    .btn-decode {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+      padding: 14px 28px;
+      background: var(--green-deep);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      width: 100%;
+      justify-content: center;
+    }
+    .btn-decode:hover  { background: var(--green-mid); }
+    .btn-decode:active { transform: scale(0.99); }
+    .btn-decode:disabled { background: var(--text-light); cursor: not-allowed; transform: none; }
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.35);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+      display: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Loading bar ───────────────────────────────────────────── */
+    .loading-bar {
+      display: none; height: 3px;
+      background: var(--green-light);
+      border-radius: 2px; margin-top: 16px; overflow: hidden;
+    }
+    .loading-bar-inner {
+      height: 100%; width: 40%;
+      background: var(--green-mid);
+      border-radius: 2px;
+      animation: slide 1.4s ease-in-out infinite;
+    }
+    @keyframes slide {
+      0%   { transform: translateX(-100%); }
+      100% { transform: translateX(350%); }
+    }
+    .loading-label {
+      display: none; font-size: 13px; color: var(--text-muted);
+      text-align: center; margin-top: 12px; font-style: italic;
+    }
+
+    /* ── Error banner ──────────────────────────────────────────── */
+    .error-banner {
+      display: none;
+      background: var(--high-bg);
+      border: 1px solid var(--high-border);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      color: var(--high-text);
+      font-size: 14px;
+      margin-top: 16px;
+    }
+
+    /* ── Results ───────────────────────────────────────────────── */
+    #results-section { display: none; animation: fadeUp 0.4s ease forwards; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .results-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .results-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 500; color: var(--green-deep);
+    }
+    .report-type-badge {
+      display: inline-block; font-size: 11px; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 4px 10px;
+      background: var(--green-light);
+      color: var(--green-deep);
+      border-radius: 20px;
+    }
+    .results-body .param {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-md); padding: 20px 22px;
+      margin-bottom: 12px; transition: border-color 0.15s;
+    }
+    .results-body .param:hover { border-color: #B5CAC3; }
+    .results-body .param-header {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px; margin-bottom: 8px;
+    }
+    .results-body .param-name { font-weight: 500; font-size: 15px; color: var(--text-main); }
+    .results-body .param-badge {
+      display: inline-block; font-size: 11px; font-weight: 500;
+      padding: 3px 10px; border-radius: 20px;
+      border: 1px solid transparent; white-space: nowrap;
+    }
+    .results-body .param-badge.normal        { background: var(--normal-bg); color: var(--normal-text); border-color: var(--normal-border); }
+    .results-body .param-badge.slightly-low  { background: var(--slight-bg); color: var(--slight-text); border-color: var(--slight-border); }
+    .results-body .param-badge.low           { background: var(--low-bg);    color: var(--low-text);    border-color: var(--low-border); }
+    .results-body .param-badge.slightly-high { background: var(--slight-bg); color: var(--slight-text); border-color: var(--slight-border); }
+    .results-body .param-badge.high          { background: var(--high-bg);   color: var(--high-text);   border-color: var(--high-border); }
+    .results-body .param-meta {
+      font-family: 'IBM Plex Mono', monospace; font-size: 11.5px;
+      color: var(--text-muted); margin-bottom: 10px;
+    }
+    .results-body .param-explanation { font-size: 14px; line-height: 1.7; color: var(--text-main); }
+    .results-body .report-footer {
+      background: var(--green-light); border-radius: var(--radius-md);
+      padding: 16px 20px; font-size: 13px; line-height: 1.65;
+      color: var(--green-deep); margin-top: 16px;
+    }
+    .results-body .not-a-report {
+      background: var(--slight-bg); border: 1px solid var(--slight-border);
+      border-radius: var(--radius-md); padding: 20px; font-size: 14px;
+      color: var(--slight-text); line-height: 1.65;
+    }
+
+    /* ── Secondary button ──────────────────────────────────────── */
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 24px; padding: 10px 20px;
+      background: transparent; color: var(--green-mid);
+      border: 1px solid var(--green-mid); border-radius: var(--radius-md);
+      font-family: 'IBM Plex Sans', sans-serif; font-size: 14px;
+      font-weight: 400; cursor: pointer; transition: background 0.15s;
+    }
+    .btn-secondary:hover { background: var(--green-light); }
+
+    /* ── Sample box ────────────────────────────────────────────── */
+    .sample-box {
+      background: var(--surface-alt); border: 1px dashed var(--border);
+      border-radius: var(--radius-md); padding: 16px 20px; margin-bottom: 24px;
+    }
+    .sample-box summary {
+      font-size: 13px; font-weight: 500; color: var(--text-muted);
+      cursor: pointer; user-select: none; list-style: none;
+    }
+    .sample-box summary::before { content: '+ '; }
+    .sample-box[open] summary::before { content: '- '; }
+    .sample-content {
+      font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+      color: var(--text-muted); line-height: 1.8; margin-top: 12px; white-space: pre;
+    }
+    .use-sample-btn {
+      font-size: 12px; color: var(--green-mid); background: none; border: none;
+      cursor: pointer; padding: 6px 0 0; font-family: 'IBM Plex Sans', sans-serif;
+      text-decoration: underline; text-underline-offset: 2px; display: block;
+    }
+
+    /* ── Footer ────────────────────────────────────────────────── */
+    footer {
+      margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    footer p  { font-size: 12px; color: var(--text-light); line-height: 1.5; }
+    footer a  { color: var(--text-muted); text-decoration: none; font-size: 12px; }
+    footer a:hover { color: var(--green-mid); }
+
+    /* ── Responsive ────────────────────────────────────────────── */
+    @media (max-width: 480px) {
+      .input-card { padding: 20px 18px; }
+      header      { padding: 32px 0 24px; }
+      .mode-toggle { width: 100%; }
+      .mode-btn   { flex: 1; justify-content: center; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="page-wrap">
+
+  <!-- Header -->
+  <header>
+    <p class="header-eyebrow">AI-Powered · Free · Private</p>
+    <h1>Bio Report<br>Decoder</h1>
+    <p>Upload your lab report PDF or paste the values. Get a plain-English explanation of every parameter — what it means, whether it's normal, and the biology behind it.</p>
+  </header>
+
+  <!-- Sample (shown only in paste mode) -->
+  <details class="sample-box" id="sample-details">
+    <summary>Not sure how to paste? See a sample report format</summary>
+    <pre class="sample-content" id="sample-text">COMPLETE BLOOD COUNT (CBC)
+Test                 Result      Reference Range    Unit
+----------------------------------------------------------
+Hemoglobin           11.2        12.0 - 16.0        g/dL
+Total WBC            9,800       4,000 - 11,000     /µL
+RBC Count            3.8         3.8 - 5.1          million/µL
+Platelet Count       180,000     1,50,000 - 4,00,000  /µL
+Hematocrit (PCV)     34.5        36 - 46            %
+MCV                  88          80 - 100           fL
+MCH                  28.5        26 - 32            pg
+MCHC                 32.4        31 - 36            g/dL
+Neutrophils          65          40 - 75            %
+Lymphocytes          28          20 - 45            %</pre>
+    <button class="use-sample-btn" onclick="useSample()">Use this sample →</button>
+  </details>
+
+  <!-- Input card -->
+  <div class="input-card">
+
+    <!-- Mode toggle -->
+    <div class="mode-toggle" role="tablist">
+      <button class="mode-btn active" id="btn-paste" role="tab"
+              aria-selected="true" onclick="setMode('paste')">
+        <svg width="14" height="14" fill="none" stroke="currentColor"
+             stroke-width="2" viewBox="0 0 24 24">
+          <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+          <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+        </svg>
+        Type / Paste
+      </button>
+      <button class="mode-btn" id="btn-pdf" role="tab"
+              aria-selected="false" onclick="setMode('pdf')">
+        <svg width="14" height="14" fill="none" stroke="currentColor"
+             stroke-width="2" viewBox="0 0 24 24">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="12" y1="18" x2="12" y2="12"/>
+          <line x1="9"  y1="15" x2="15" y2="15"/>
+        </svg>
+        Upload PDF
+      </button>
+    </div>
+
+    <!-- ── PASTE PANE ─────────────────────────────────────────── -->
+    <div id="paste-pane">
+      <div class="pdf-source-banner" id="pdf-source-banner">
+        <svg width="14" height="14" fill="none" stroke="currentColor"
+             stroke-width="2" viewBox="0 0 24 24">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+        </svg>
+        <span id="pdf-source-text">Extracted from PDF — review the text below, then hit Decode.</span>
+      </div>
+
+      <label class="input-label" for="report-input">Paste your lab report values below</label>
+      <textarea
+        id="report-input"
+        placeholder="Hemoglobin: 11.2 g/dL (ref: 12–16)&#10;WBC: 9,800 /µL (ref: 4,000–11,000)&#10;Platelets: 1,80,000 /µL&#10;TSH: 3.2 mIU/L&#10;...&#10;&#10;You can paste the full table — parameter names, values, and reference ranges."
+        oninput="updateCharCount()"
+      ></textarea>
+      <div class="char-count" id="char-count">0 / 6,000</div>
+    </div>
+
+    <!-- ── PDF PANE ───────────────────────────────────────────── -->
+    <div id="pdf-pane">
+      <div class="drop-zone" id="drop-zone"
+           onclick="document.getElementById('pdf-input').click()"
+           ondragover="handleDragOver(event)"
+           ondragleave="handleDragLeave(event)"
+           ondrop="handleDrop(event)">
+        <input type="file" id="pdf-input" accept=".pdf"
+               onchange="handleFileSelect(this.files[0])" />
+        <div class="drop-icon">
+          <svg width="22" height="22" fill="none" stroke="var(--green-mid)"
+               stroke-width="2" viewBox="0 0 24 24">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+        </div>
+        <p class="drop-main">Drop your lab report PDF here</p>
+        <p class="drop-sub">or click to browse &nbsp;·&nbsp; PDF only &nbsp;·&nbsp; Max 15 MB</p>
+      </div>
+
+      <div id="pdf-status">
+        <div class="pdf-file-row">
+          <svg width="16" height="16" fill="none" stroke="var(--green-mid)"
+               stroke-width="2" viewBox="0 0 24 24">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+          </svg>
+          <span class="pdf-file-name" id="pdf-file-name">report.pdf</span>
+          <span class="pdf-file-size" id="pdf-file-size"></span>
+          <button onclick="clearPdf()"
+                  style="background:none;border:none;cursor:pointer;color:var(--text-light);font-size:18px;line-height:1;padding:0 0 2px;"
+                  title="Remove">×</button>
+        </div>
+        <div class="pdf-progress" id="pdf-progress">
+          <div class="mini-spinner"></div>
+          <span id="pdf-progress-text">Extracting text from PDF…</span>
+        </div>
+        <div class="pdf-error" id="pdf-error"></div>
+      </div>
+    </div>
+
+    <!-- Shared: loading bar + error + decode button -->
+    <div class="loading-bar" id="loading-bar">
+      <div class="loading-bar-inner"></div>
+    </div>
+    <p class="loading-label" id="loading-label">Analysing your report — this takes about 10 seconds…</p>
+    <div class="error-banner" id="error-banner"></div>
+
+    <button class="btn-decode" id="decode-btn" onclick="decodeReport()">
+      <span id="btn-icon">
+        <svg width="18" height="18" fill="none" stroke="currentColor"
+             stroke-width="2" viewBox="0 0 24 24">
+          <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+          <path d="M9 12l2 2 4-4"/>
+        </svg>
+      </span>
+      <div class="spinner" id="spinner"></div>
+      <span id="btn-text">Decode my report</span>
+    </button>
+  </div>
+
+  <!-- Results -->
+  <section id="results-section">
+    <div class="results-header">
+      <h2 class="results-title">Your Results</h2>
+      <span class="report-type-badge" id="report-type-badge">Report</span>
+    </div>
+    <div class="results-body" id="results-body"></div>
+    <button class="btn-secondary" onclick="resetForm()">← Decode another report</button>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>Educational use only · Not a substitute for medical advice · Your data stays on this server</p>
+    <a href="https://github.com/YOUR_USERNAME/40-bio-apps-40-weeks"
+       target="_blank" rel="noopener">
+      Part of 40 bio apps · 40 weeks →
+    </a>
+  </footer>
+
+</div>
+
+<script>
+  /* ── State ──────────────────────────────────────────────────── */
+  let currentMode = 'paste';
+
+  const $ = id => document.getElementById(id);
+
+  /* ── Mode switching ─────────────────────────────────────────── */
+  function setMode(mode) {
+    currentMode = mode;
+    $('btn-paste').classList.toggle('active', mode === 'paste');
+    $('btn-pdf').classList.toggle('active',   mode === 'pdf');
+    $('btn-paste').setAttribute('aria-selected', mode === 'paste');
+    $('btn-pdf').setAttribute('aria-selected',   mode === 'pdf');
+    $('paste-pane').style.display      = mode === 'paste' ? 'block' : 'none';
+    $('pdf-pane').style.display        = mode === 'pdf'   ? 'block' : 'none';
+    $('sample-details').style.display  = mode === 'paste' ? ''      : 'none';
+    hideError();
+  }
+
+  /* ── Paste helpers ──────────────────────────────────────────── */
+  function updateCharCount() {
+    const len = $('report-input').value.length;
+    $('char-count').textContent = `${len.toLocaleString()} / 6,000`;
+    $('char-count').style.color = len > 5500 ? '#991B1B' : '';
+  }
+
+  function useSample() {
+    $('report-input').value = $('sample-text').textContent.trim();
+    updateCharCount();
+    $('sample-details').open = false;
+    $('report-input').focus();
+  }
+
+  /* ── PDF drag-and-drop ──────────────────────────────────────── */
+  function handleDragOver(e) {
+    e.preventDefault();
+    $('drop-zone').classList.add('dragover');
+  }
+  function handleDragLeave() {
+    $('drop-zone').classList.remove('dragover');
+  }
+  function handleDrop(e) {
+    e.preventDefault();
+    $('drop-zone').classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file) handleFileSelect(file);
+  }
+
+  /* ── PDF upload and extraction ──────────────────────────────── */
+  function handleFileSelect(file) {
+    if (!file) return;
+
+    // Client-side checks before uploading
+    if (!file.name.toLowerCase().endsWith('.pdf')) {
+      showPdfError('Please choose a .pdf file.');
+      return;
+    }
+    if (file.size > 15 * 1024 * 1024) {
+      showPdfError('File is too large (max 15 MB).');
+      return;
+    }
+
+    // Show the file row
+    $('pdf-file-name').textContent = file.name;
+    $('pdf-file-size').textContent = formatBytes(file.size);
+    $('pdf-status').style.display  = 'block';
+    $('pdf-error').style.display   = 'none';
+    $('pdf-progress').style.display = 'flex';
+    $('pdf-progress-text').textContent = 'Extracting text from PDF…';
+
+    const formData = new FormData();
+    formData.append('pdf', file);
+
+    fetch('/extract-pdf', { method: 'POST', body: formData })
+      .then(res => res.json())
+      .then(data => {
+        $('pdf-progress').style.display = 'none';
+
+        if (data.error) {
+          showPdfError(data.error);
+          return;
+        }
+
+        // Populate textarea and jump to paste mode for review
+        $('report-input').value = data.text;
+        updateCharCount();
+
+        $('pdf-source-text').textContent =
+          `Extracted from "${file.name}" (${data.chars.toLocaleString()} chars) — review, then decode.`;
+        $('pdf-source-banner').style.display = 'flex';
+
+        setMode('paste');
+        $('report-input').focus();
+      })
+      .catch(err => {
+        $('pdf-progress').style.display = 'none';
+        showPdfError('Network error: ' + err.message);
+      });
+  }
+
+  function clearPdf() {
+    $('pdf-input').value          = '';
+    $('pdf-status').style.display = 'none';
+    $('pdf-error').style.display  = 'none';
+  }
+
+  function showPdfError(msg) {
+    $('pdf-error').textContent      = msg;
+    $('pdf-error').style.display    = 'block';
+    $('pdf-progress').style.display = 'none';
+  }
+
+  function formatBytes(bytes) {
+    if (bytes < 1024)        return bytes + ' B';
+    if (bytes < 1048576)     return Math.round(bytes / 1024) + ' KB';
+    return (bytes / 1048576).toFixed(1) + ' MB';
+  }
+
+  /* ── Decode ─────────────────────────────────────────────────── */
+  function setLoading(on) {
+    $('decode-btn').disabled         = on;
+    $('spinner').style.display       = on ? 'block' : 'none';
+    $('btn-icon').style.display      = on ? 'none'  : 'block';
+    $('btn-text').textContent        = on ? 'Decoding…' : 'Decode my report';
+    $('loading-bar').style.display   = on ? 'block' : 'none';
+    $('loading-label').style.display = on ? 'block' : 'none';
+  }
+
+  function showError(msg) {
+    $('error-banner').textContent    = msg;
+    $('error-banner').style.display  = 'block';
+  }
+  function hideError() { $('error-banner').style.display = 'none'; }
+
+  async function decodeReport() {
+    const text = $('report-input').value.trim();
+
+    if (!text) {
+      if (currentMode === 'pdf') {
+        showError('Upload a PDF first — or switch to "Type / Paste" to enter values manually.');
+      } else {
+        showError('Please paste your lab report values first.');
+        $('report-input').focus();
+      }
+      return;
+    }
+
+    hideError();
+    setLoading(true);
+    $('results-section').style.display = 'none';
+
+    try {
+      const res = await fetch('/decode', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ report_text: text }),
+      });
+      const data = await res.json();
+
+      if (!res.ok || data.error) {
+        showError(data.error || 'Something went wrong. Please try again.');
+        return;
+      }
+
+      $('results-body').innerHTML        = data.explanation;
+      $('report-type-badge').textContent = data.report_type || 'Report';
+      $('results-section').style.display = 'block';
+      $('results-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    } catch (err) {
+      showError('Network error — is the server running? ' + err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  /* ── Reset ──────────────────────────────────────────────────── */
+  function resetForm() {
+    $('report-input').value              = '';
+    updateCharCount();
+    $('pdf-source-banner').style.display = 'none';
+    $('results-section').style.display   = 'none';
+    $('pdf-status').style.display        = 'none';
+    $('pdf-input').value                 = '';
+    hideError();
+    setMode('paste');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ── Keyboard shortcut ──────────────────────────────────────── */
+  document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') decodeReport();
+  });
+
+  /* ── Init ───────────────────────────────────────────────────── */
+  setMode('paste');
+</script>
+</body>
+</html>
