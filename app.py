@@ -1,7 +1,9 @@
+import io
 import os
 import sqlite3
 from datetime import datetime
 
+import pdfplumber
 from dotenv import load_dotenv
 from flask import Flask, jsonify, render_template, request
 import google.generativeai as genai
@@ -159,6 +161,72 @@ def decode():
         "report_type": report_type,
         "id": row_id,
     })
+
+
+# ── PDF extraction ────────────────────────────────────────────────────────────
+MAX_PDF_BYTES = 15 * 1024 * 1024  # 15 MB
+
+
+@app.route("/extract-pdf", methods=["POST"])
+def extract_pdf():
+    if "pdf" not in request.files:
+        return jsonify({"error": "No PDF received."}), 400
+
+    pdf_file = request.files["pdf"]
+
+    if not pdf_file.filename:
+        return jsonify({"error": "No file selected."}), 400
+
+    if not pdf_file.filename.lower().endswith(".pdf"):
+        return jsonify({"error": "Please upload a .pdf file."}), 400
+
+    pdf_bytes = pdf_file.read()
+
+    if len(pdf_bytes) > MAX_PDF_BYTES:
+        return jsonify({"error": "PDF is too large (max 15 MB). Try a smaller file."}), 400
+
+    try:
+        text_parts = []
+
+        with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
+            for page in pdf.pages:
+                # Try table extraction first — lab reports are usually tables
+                tables = page.extract_tables()
+                if tables:
+                    for table in tables:
+                        for row in table:
+                            if not row:
+                                continue
+                            # Join cells, skip fully-empty rows
+                            cells = [c.strip() if c else "" for c in row]
+                            row_str = "  ".join(cells).strip()
+                            if row_str:
+                                text_parts.append(row_str)
+                else:
+                    # Fallback: plain text (works for non-table PDFs)
+                    plain = page.extract_text()
+                    if plain:
+                        text_parts.append(plain.strip())
+
+        extracted = "\n".join(text_parts).strip()
+
+        if not extracted:
+            return jsonify({
+                "error": (
+                    "No text found in this PDF — it may be a scanned image. "
+                    "Try taking a photo of the report and typing the key values manually, "
+                    "or ask your lab for a digital copy."
+                )
+            }), 422
+
+        # Trim to the app's character limit
+        if len(extracted) > 6000:
+            extracted = extracted[:6000]
+
+        return jsonify({"text": extracted, "chars": len(extracted)})
+
+    except Exception as exc:
+        return jsonify({"error": f"Could not read this PDF: {exc}"}), 500
 
 
 # ── (Optional) quick stats endpoint — useful for your own market research ────
