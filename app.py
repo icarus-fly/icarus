@@ -13,7 +13,14 @@ load_dotenv()
 app = Flask(__name__)
 
 # ── Gemini setup ────────────────────────────────────────────────────────────
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+GEMINI_KEY = os.getenv("GEMINI_API_KEY", "")
+if not GEMINI_KEY:
+    import warnings
+    warnings.warn(
+        "⚠️  GEMINI_API_KEY is not set. The /decode endpoint will fail. "
+        "Set it in Render → Environment → Environment Variables."
+    )
+genai.configure(api_key=GEMINI_KEY)
 model = genai.GenerativeModel("gemini-1.5-flash")
 
 
@@ -243,7 +250,18 @@ def stats():
     return jsonify({"totals": [{"type": r[0], "count": r[1]} for r in rows]})
 
 
-# ── Entrypoint ────────────────────────────────────────────────────────────────
+# ── Health check (Render pings this to verify the service is alive) ───────────
+@app.route("/health")
+def health():
+    return jsonify({"status": "ok"}), 200
+
+
+# ── Initialise DB at module level so it runs under Gunicorn too ───────────────
+init_db()
+
+
+# ── Entrypoint (local dev only — Gunicorn ignores this block) ─────────────────
 if __name__ == "__main__":
-    init_db()
-    app.run(debug=True, port=5000)
+    port = int(os.getenv("PORT", 5000))
+    app.run(debug=True, host="0.0.0.0", port=port)
+
