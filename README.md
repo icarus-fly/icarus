@@ -8,58 +8,49 @@
 
 ## 🎯 What is Traqa?
 
-Traqa is a revolutionary health app that decodes complex medical reports, prescriptions, MRI scans, and X-rays into plain regional language explanations — with diagrams and audio — so even illiterate family members can understand their health condition.
+Traqa is a revolutionary health app that helps families understand complex medical reports by translating medical jargon into plain regional language explanations — complete with visual diagrams and audio support.
 
-**The emotional hook:** One person (usually the adult child) manages health for their entire family from one account. Reports from a parent in another city trigger real-time notifications to the family manager, with AI explanations in their regional language.
+**The emotional hook:** Manage your entire family's health from one account, with real-time notifications and explanations tailored to your family's language preferences.
 
-## ✨ Features
+## ✨ Key Features
 
-### 🏥 Medical Report Analysis
-- **Multi-format Support**: Upload photos, scanned documents, or PDF reports
-- **AI-Powered Analysis**: Google Gemini AI analyzes and simplifies medical jargon
-- **12 Regional Languages**: Hindi, Tamil, Bengali, Telugu, Marathi, Gujarati, Kannada, Malayalam, Punjabi, Odia, Assamese, Urdu
-- **Audio Explanations**: Text-to-speech in regional languages for illiterate users
+### 🏥 Medical Report Understanding
+- **Multi-format Support**: Upload various medical document types
+- **AI-Powered Simplification**: Transform complex medical terms into understandable language
+- **Multi-language Support**: Comprehensive regional language coverage
+- **Audio Explanations**: Text-to-speech support for accessibility
 
 ### 👨‍👩‍👧‍👦 Family Health Management
-- **Family Profiles**: Add and manage multiple family members
-- **Real-time Alerts**: Get notified when family members upload reports
-- **Cross-location Care**: Manage health for relatives in different cities
-- **Relationship-based UI**: Color-coded avatars based on family relationships
+- **Family Profiles**: Manage multiple family members seamlessly
+- **Real-time Alerts**: Stay informed about family health updates
+- **Cross-location Care**: Support relatives across different locations
+- **Relationship-based Interface**: Intuitive family relationship visualization
 
 ### 🔔 Smart Notifications
-- **Push Notifications**: Instant alerts for report readiness
-- **Health Reminders**: Daily check-in reminders
-- **Customizable Preferences**: Control what notifications you receive
+- **Timely Alerts**: Important health updates and reminders
+- **Customizable Preferences**: Control your notification experience
 
-### 💳 Premium Features
-- **Family Slots**: ₹50/year per additional family member
-- **Health Tracking**: ₹50/month for advanced health monitoring
-- **Secure Payments**: Razorpay integration with proper verification
+## 🛠 Technology Highlights
 
-## 🛠 Tech Stack
+- **Frontend**: Built with Flutter for cross-platform compatibility
+- **Backend**: Cloud-based infrastructure for reliability
+- **AI Integration**: Advanced language processing capabilities
+- **Modern Architecture**: Clean, maintainable code structure
 
-- **Frontend**: Flutter (Dart) - Latest stable version
-- **Backend**: Firebase (Auth, Firestore, Storage, Functions, FCM)
-- **AI**: Google Gemini 1.5 Flash API
-- **Payments**: Razorpay Flutter SDK
-- **State Management**: Riverpod
-- **Navigation**: GoRouter
-- **Notifications**: Firebase Cloud Messaging
+## 📱 App Experience
 
-## 🚀 Quick Start
+- **Beautiful Dark Theme**: Comfortable viewing for medical content
+- **Responsive Design**: Optimized for all mobile devices
+- **Accessibility Focus**: Large text, high contrast, audio support
+- **Smooth Navigation**: Intuitive user journey through the app
 
-### Prerequisites
+## 🚀 Getting Started
 
-1. **Flutter SDK**: [Install Flutter](https://flutter.dev/docs/get-started/install)
-2. **Firebase Account**: [Create Firebase Project](https://console.firebase.google.com)
-3. **Google Gemini API Key**: [Get from Google AI Studio](https://makersuite.google.com)
-4. **Razorpay Account**: [Sign up at Razorpay](https://razorpay.com)
-
-### Installation
+### Basic Setup
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/traqa.git
+   git clone https://github.com/icarus-fly/icarus.git
    cd traqa
    ```
 
@@ -68,152 +59,45 @@ Traqa is a revolutionary health app that decodes complex medical reports, prescr
    flutter pub get
    ```
 
-3. **Setup Firebase**
-   ```bash
-   # Install Firebase CLI
-   npm install -g firebase-tools
-   
-   # Login to Firebase
-   firebase login
-   
-   # Initialize project
-   firebase init
-   ```
-
-4. **Configure environment variables**
-   
-   Update `functions/.env`:
-   ```env
-   GEMINI_API_KEY=your_gemini_api_key
-   RAZORPAY_KEY_ID=your_razorpay_key_id
-   RAZORPAY_KEY_SECRET=your_razorpay_key_secret
-   ```
-
-5. **Deploy Cloud Functions**
-   ```bash
-   cd functions
-   npm install
-   firebase deploy --only functions
-   ```
-
-6. **Run the app**
+3. **Run the app**
    ```bash
    flutter run
    ```
 
-## 📱 App Structure
+## 🎨 UI/UX Excellence
 
-```
-traqa/
-├── android/                 # Android specific files
-├── ios/                   # iOS specific files
-├── lib/                   # Flutter application code
-│   ├── app/              # App configuration
-│   ├── core/             # Core functionality
-│   │   ├── constants/    # App constants and strings
-│   │   ├── providers/    # Riverpod state providers
-│   │   └── services/     # Business logic services
-│   ├── features/         # Feature modules
-│   │   ├── family/       # Family management
-│   │   ├── history/      # Report history
-│   │   ├── onboarding/   # Login and setup
-│   │   ├── profile/      # User profile
-│   │   ├── report/       # Report analysis flow
-│   │   └── streak/       # Health tracking
-│   └── shared/           # Shared components
-├── functions/            # Firebase Cloud Functions
-│   ├── index.js         # Main functions file
-│   └── package.json     # Node.js dependencies
-└── assets/              # Static assets
-    └── logo/            # App logos and icons
-```
+- Professional healthcare-focused design
+- Smooth animations and loading states
+- User-friendly error handling
+- Consistent branding throughout
 
-## 🎨 UI/UX Features
+## 🔒 Security & Privacy
 
-- **Dark Theme**: Easy-on-eyes interface for medical content
-- **Responsive Design**: Works on all mobile devices
-- **Accessibility**: Large text, high contrast, audio support
-- **Intuitive Navigation**: Smooth flow between features
-- **Loading States**: Professional loading animations
-- **Error Handling**: User-friendly error messages
+- Robust data protection measures
+- Secure user authentication
+- Proper data isolation practices
+- Compliance with healthcare privacy standards
 
-## 🔒 Security
+## 🤝 Community & Support
 
-- **Firebase Security Rules**: Proper data isolation
-- **Payment Verification**: Backend payment validation
-- **API Key Protection**: Never exposed in client code
-- **User Authentication**: Google Sign-in with proper scopes
-- **Data Encryption**: Firebase Storage encryption
+We welcome community engagement and feedback:
 
-## 📊 Database Schema
-
-### Firestore Collections
-
-- `users/{userId}` - User profiles and preferences
-- `users/{userId}/familyMembers` - Family member data
-- `users/{userId}/reports` - Medical report analysis results
-- `users/{userId}/payments` - Payment transaction history
-
-## 🧪 Testing
-
-```bash
-# Run unit tests
-flutter test
-
-# Run integration tests
-flutter test integration_test
-
-# Test Cloud Functions locally
-cd functions
-npm run serve
-```
-
-## 📈 Deployment
-
-### Android
-```bash
-flutter build apk --release
-flutter build appbundle --release
-```
-
-### iOS
-```bash
-flutter build ios --release
-```
-
-### Web
-```bash
-flutter build web --release
-```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+- 📧 Email: support@traqa.health
+- 🐛 Issues: [GitHub Issues](https://github.com/icarus-fly/icarus/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/icarus-fly/icarus/discussions)
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
-
-- 📧 Email: support@traqa.health
-- 🐛 Issues: [GitHub Issues](https://github.com/your-username/traqa/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/your-username/traqa/discussions)
-
 ## 🙏 Acknowledgments
 
-- Google Gemini AI for medical analysis
-- Firebase for backend infrastructure
-- Razorpay for payment processing
-- Flutter team for the amazing framework
-- Indian regional language communities
+- The Flutter community for an amazing framework
+- Healthcare professionals who provided insights
+- Families who inspired this solution
 
 ---
 
-**Made with ❤️ for Indian Families**
+**Made with ❤️ for Families Everywhere**
 
 *Your family's health, in words you understand.*
