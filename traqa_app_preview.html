@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traqa App Interface Preview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #121212;
+            color: #ffffff;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #1e1e1e;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0066FF, #0099FF);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .screen {
+            background: #2a2a2a;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .screen h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #0066FF;
+        }
+
+        .button {
+            background: #0066FF;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .button:hover {
+            background: #0055DD;
+        }
+
+        .button.secondary {
+            background: #333;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .language-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .language-item {
+            background: #333;
+            padding: 15px 10px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .language-item:hover {
+            background: #444;
+        }
+
+        .selected {
+            background: #0066FF !important;
+            border: 2px solid #0099FF;
+        }
+
+        .report-card {
+            background: #333;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status.normal { background: #00C853; color: white; }
+        .status.warning { background: #FF9500; color: white; }
+        .status.critical { background: #FF3B30; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 Traqa</h1>
+            <p>Your family's health, in words you understand</p>
+        </div>
+
+        <div class="content">
+            <!-- Home Screen Preview -->
+            <div class="screen">
+                <h3>📱 Home Screen</h3>
+                <button class="button" onclick="showScreen('upload')">
+                    📄 Upload Medical Report
+                </button>
+                <button class="button secondary" onclick="showScreen('family')">
+                    👨‍👩‍👧‍👦 Family Members
+                </button>
+                <button class="button secondary" onclick="showScreen('history')">
+                    📊 Report History
+                </button>
+            </div>
+
+            <!-- Upload Screen Preview -->
+            <div class="screen" id="upload-screen" style="display: none;">
+                <h3>📤 Upload Medical Report</h3>
+                <p>Upload photos, scans, or PDF documents</p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0;">
+                    <button class="button secondary">📷 Add Photos</button>
+                    <button class="button secondary">📄 Add PDF</button>
+                </div>
+
+                <button class="button" onclick="showScreen('report-type')">
+                    Continue to Analysis
+                </button>
+            </div>
+
+            <!-- Report Type Screen Preview -->
+            <div class="screen" id="report-type-screen" style="display: none;">
+                <h3>🔍 Report Type</h3>
+                <p>Select the type of medical document</p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0;">
+                    <div class="language-item selected">🩸 Lab Report</div>
+                    <div class="language-item">💊 Prescription</div>
+                    <div class="language-item">🧠 MRI Scan</div>
+                    <div class="language-item">🦴 X-Ray</div>
+                    <div class="language-item">📋 General</div>
+                    <div class="language-item">🔬 Other</div>
+                </div>
+
+                <button class="button" onclick="showScreen('language')">
+                    Choose Language
+                </button>
+            </div>
+
+            <!-- Language Selection Preview -->
+            <div class="screen" id="language-screen" style="display: none;">
+                <h3>🗣️ Choose Language</h3>
+                <p>Select preferred language for explanation</p>
+
+                <div class="language-grid">
+                    <div class="language-item selected">🇬🇧 English</div>
+                    <div class="language-item">🇮🇳 Hindi</div>
+                    <div class="language-item">🇮🇳 Tamil</div>
+                    <div class="language-item">🇮🇳 Bengali</div>
+                    <div class="language-item">🇮🇳 Telugu</div>
+                    <div class="language-item">🇮🇳 Marathi</div>
+                    <div class="language-item">🇮🇳 Gujarati</div>
+                    <div class="language-item">🇮🇳 Kannada</div>
+                    <div class="language-item">🇮🇳 Malayalam</div>
+                </div>
+
+                <button class="button" onclick="showScreen('result')">
+                    🧠 Analyze with AI
+                </button>
+            </div>
+
+            <!-- Result Screen Preview -->
+            <div class="screen" id="result-screen" style="display: none;">
+                <h3>📊 Analysis Results</h3>
+
+                <div class="report-card">
+                    <h4>Hemoglobin Test</h4>
+                    <p>Your blood test results show good overall health with a few areas to monitor.</p>
+
+                    <div style="margin: 15px 0;">
+                        <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                            <span>Hemoglobin:</span>
+                            <span class="status normal">12.5 g/dL ✅</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                            <span>Blood Sugar:</span>
+                            <span class="status warning">110 mg/dL ⚠️</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                            <span>Cholesterol:</span>
+                            <span class="status normal">180 mg/dL ✅</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="button">🔊 Listen to Explanation</button>
+                <button class="button secondary">📤 Share Report</button>
+            </div>
+
+            <!-- Family Screen Preview -->
+            <div class="screen" id="family-screen" style="display: none;">
+                <h3>👨‍👩‍👧‍👦 Family Members</h3>
+
+                <div class="report-card">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 40px; height: 40px; background: #0066FF; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">M</div>
+                        <div>
+                            <h4>Mother</h4>
+                            <p style="font-size: 12px; opacity: 0.8;">Age: 65 • Delhi</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-card">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 40px; height: 40px; background: #00C853; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">F</div>
+                        <div>
+                            <h4>Father</h4>
+                            <p style="font-size: 12px; opacity: 0.8;">Age: 68 • Mumbai</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="button">➕ Add Family Member</button>
+            </div>
+
+            <button class="button secondary" onclick="showScreen('home')" style="margin-top: 20px;">
+                ← Back to Home
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function showScreen(screenName) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.style.display = 'none';
+            });
+
+            // Show selected screen
+            document.getElementById(screenName + '-screen').style.display = 'block';
+        }
+
+        // Initialize with home screen
+        showScreen('home');
+    </script>
+</body>
+</html>
