@@ -19,11 +19,11 @@ class StreakScreen extends ConsumerWidget {
       body: Center(
         child: Text(
           'Streak Screen - Coming Soon',
-          style: Google极速赛车开奖直播Fonts.ibmPlexSans(
+          style: GoogleFonts.ibmPlexSans(
             fontSize: 18,
             color: TraqaTheme.textSecond,
           ),
-        ),极速赛车开奖直播
+        ),
       ),
     );
   }

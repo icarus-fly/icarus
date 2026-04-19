@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traqa Health App - Visual Preview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1f2c 0%, #2a303c 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .app-bar {
+            background: #1a1f2c;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .app-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00bfa5 0%, #00acc1 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .app-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .hero-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #00bfa5 0%, #00acc1 100%);
+            border-radius: 24px;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 60px;
+            box-shadow: 0 8px 32px rgba(0, 191, 165, 0.3);
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #00bfa5 0%, #00acc1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: #a0aec0;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: #2a303c;
+            padding: 30px 20px;
+            border-radius: 16px;
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #00bfa5 0%, #00acc1 100%);
+            border-radius: 16px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: #a0aec0;
+            line-height: 1.5;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #00bfa5 0%, #00acc1 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: block;
+            margin: 40px auto;
+            max-width: 200px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 191, 165, 0.4);
+        }
+
+        .demo-note {
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="app-bar">
+            <div class="app-icon">🏥</div>
+            <div class="app-title">Traqa Health</div>
+        </div>
+
+        <div class="hero-section">
+            <div class="hero-icon">💊</div>
+            <h1 class="hero-title">Traqa Health App</h1>
+            <p class="hero-subtitle">Your family's health, in words you understand.<br>AI-powered medical report simplification for everyone.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📄</div>
+                <h3 class="feature-title">Upload Medical Reports</h3>
+                <p class="feature-desc">Easily upload PDF or image medical reports for instant analysis and simplification.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3 class="feature-title">AI-Powered Simplification</h3>
+                <p class="feature-desc">Advanced AI translates complex medical jargon into easy-to-understand language.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">👨‍👩‍👧‍👦</div>
+                <h3 class="feature-title">Family Health Management</h3>
+                <p class="feature-desc">Manage health records for your entire family in one secure place.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3 class="feature-title">Health Tracking</h3>
+                <p class="feature-desc">Visual charts and timeline views to track health progress over time.</p>
+            </div>
+        </div>
+
+        <button class="cta-button" onclick="alert('Preview Mode - Real app functionality coming soon!')">
+            Get Started
+        </button>
+
+        <div class="demo-note">
+            <strong>Preview Mode:</strong> This is a visual representation of your Traqa Health app.<br>
+            The actual Flutter app is ready for development with all dependencies configured.
+        </div>
+    </div>
+
+    <script>
+        // Simple animation for demonstration
+        document.addEventListener('DOMContentLoaded', function() {
+            const features = document.querySelectorAll('.feature-card');
+            features.forEach((feature, index) => {
+                feature.style.animationDelay = (index * 0.1) + 's';
+                feature.style.animation = 'fadeInUp 0.6s ease forwards';
+            });
+        });
+
+        // Add some CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .feature-card {
+                opacity: 0;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

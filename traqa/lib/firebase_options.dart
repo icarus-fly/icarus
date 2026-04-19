@@ -9,10 +9,7 @@ import 'package:flutter/foundation.dart' show defaultTargetPlatform, kIsWeb, Tar
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -42,11 +39,11 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'YOUR_ANDROID_API_KEY',
-    appId: 'YOUR_ANDROID_APP_ID',
-    messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
-    projectId: 'YOUR_PROJECT_ID',
-    storageBucket: 'YOUR_STORAGE_BUCKET',
+    apiKey: 'AIzaSyD0_QVonYUQRYLviuZceQa6h7fVJWpMxIY',
+    appId: '1:778393830282:android:f41f39393084530cc27e73',
+    messagingSenderId: '778393830282',
+    projectId: 'traqa-icarus',
+    storageBucket: 'traqa-icarus.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -57,4 +54,15 @@ class DefaultFirebaseOptions {
     storageBucket: 'YOUR_STORAGE_BUCKET',
     iosBundleId: 'com.traqa.health',
   );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDW5VNfD5aGux2EBzpkzogC9k8ekvMlTt4',
+    appId: '1:778393830282:web:345f643411a72213c27e73',
+    messagingSenderId: '778393830282',
+    projectId: 'traqa-icarus',
+    authDomain: 'traqa-icarus.firebaseapp.com',
+    storageBucket: 'traqa-icarus.firebasestorage.app',
+    measurementId: 'G-K90MZ2835H',
+  );
+
 }

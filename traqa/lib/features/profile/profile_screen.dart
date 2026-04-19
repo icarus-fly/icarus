@@ -148,8 +148,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           ListTile(
                             leading: const Icon(Icons.family_restroom, color: Colors.blue),
                             title: Text(AppStrings.get(lang, 'paidFeatureFamily')),
-                            subtitle: Text('
-Family members: ${_userData?['subscription']?['familySlots'] ?? 0}/5'),
+                            subtitle: Text('Family members: ${_userData?['subscription']?['familySlots'] ?? 0}/5'),
                             trailing: ElevatedButton(
                               onPressed: () {
                                 // TODO: Implement family slot purchase

@@ -68,3 +68,5 @@ coverage/
 # Temporary files
 .tmp/
 temp/
+jdk-17.msi
+jdk-17.zip

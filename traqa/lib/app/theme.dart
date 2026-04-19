@@ -97,7 +97,7 @@ class TraqaTheme {
       ),
 
       // ── Components ────────────────────────────────────────────────────────
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: bgCard,
         elevation: 0,
         shape: RoundedRectangleBorder(

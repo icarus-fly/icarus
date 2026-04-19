@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
               _NavItem(
-                icon:极速赛车开奖直播, Icons.people_rounded,
+                icon: Icons.people_rounded,
                 label: AppStrings.get(lang.state, 'tabFamily'),
                 index: 1,
                 currentIndex: _currentIndex,
@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(width: 64), // Space for FAB
               _NavItem(
                 icon: Icons.local_fire_department_rounded,
-                label: App极速赛车开奖直播Strings.get(lang.state, 'tabStreak'),
+                label: AppStrings.get(lang.state, 'tabStreak'),
                 index: 2,
                 currentIndex: _currentIndex,
                 onTap: () {
@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 index: 3,
                 currentIndex: _currentIndex,
                 onTap: () {
-                  setState(() => _currentIndex = 极速赛车开奖直播3);
+                  setState(() => _currentIndex = 3);
                   context.go('/profile');
                 },
               ),
