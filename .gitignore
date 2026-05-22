@@ -1,0 +1,72 @@
+# Flutter specific
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+
+# Android
+/android/
+!/android/app/src/main/res/
+!/android/app/src/main/res/**
+!/android/app/src/main/AndroidManifest.xml
+
+# iOS
+/ios/
+!/ios/Runner/
+!/ios/Runner/Assets.xcassets/
+!/ios/RRunner/Base.lproj/
+!/ios/Runner/Info.plist
+
+# Web
+/web/
+
+# Environment & secrets — NEVER commit these
+.env
+*.env
+
+# Firebase configs — add these to your .gitignore
+**/google-services.json
+**/GoogleService-Info.plist
+
+# Database — stays local
+*.db
+*.sqlite
+*.sqlite3
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Coverage
+coverage/
+
+# Packages
+.dart_tool/
+
+# Temporary files
+.tmp/
+temp/
+jdk-17.msi
+jdk-17.zip

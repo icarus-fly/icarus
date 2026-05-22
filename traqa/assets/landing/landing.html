@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Traqa - Premium Medical Literacy</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Lexend:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#000000",
+                        "secondary-container": "#dfe0e0",
+                        "surface-container-low": "#111111",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "on-primary-container": "#848484",
+                        "surface-alt": "#0a0a0a",
+                        "tertiary-container": "#1b1b1b",
+                        "surface-dim": "#dadada",
+                        "surface-container-lowest": "#000000",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "surface-tint": "#5e5e5e",
+                        "action-red": "#E2142D",
+                        "surface-variant": "#222222",
+                        "surface-container": "#181818",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "inverse-on-surface": "#f1f1f1",
+                        "neutral-muted": "#757575",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-secondary": "#000000",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "tertiary-fixed": "#e2e2e2",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-tertiary": "#000000",
+                        "volt-accent": "#D9FF00",
+                        "on-error": "#ffffff",
+                        "outline": "#333333",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "surface": "#050505",
+                        "on-background": "#ffffff",
+                        "inverse-surface": "#e0e0e0",
+                        "surface-bright": "#1a1a1a",
+                        "outline-variant": "#444444",
+                        "on-surface-variant": "#cccccc",
+                        "on-primary-fixed": "#1b1b1b",
+                        "primary-fixed": "#e2e2e2",
+                        "surface-container-highest": "#2a2a2a",
+                        "tertiary": "#ffffff",
+                        "on-secondary-container": "#a0a0a0",
+                        "secondary": "#a0a0a0",
+                        "primary-container": "#0a0a0a",
+                        "inverse-primary": "#a0a0a0",
+                        "on-tertiary-container": "#cccccc",
+                        "on-secondary-fixed-variant": "#454747",
+                        "on-surface": "#ffffff",
+                        "surface-container-high": "#222222",
+                        "on-primary-fixed-variant": "#474747",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "background": "#000000"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem",
+                        "3xl": "1.5rem"
+                    },
+                    "spacing": {
+                        "margin-desktop": "48px",
+                        "unit-1": "4px",
+                        "unit-8": "32px",
+                        "unit-4": "16px",
+                        "unit-2": "8px",
+                        "margin-mobile": "24px",
+                        "base": "4px",
+                        "unit-12": "48px",
+                        "gutter": "24px",
+                        "unit-16": "64px",
+                        "unit-24": "96px",
+                        "unit-32": "128px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Lexend"],
+                        "display-xl": ["Anton"],
+                        "headline-lg": ["Anton"],
+                        "body-md": ["Lexend"],
+                        "body-lg": ["Lexend"],
+                        "label-sm": ["Lexend"],
+                        "headline-lg-mobile": ["Anton"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["28px", {"lineHeight": "36px", "fontWeight": "700", "letterSpacing": "-0.01em"}],
+                        "display-xl": ["96px", {"lineHeight": "96px", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                        "headline-lg": ["64px", {"lineHeight": "64px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "26px", "fontWeight": "300"}],
+                        "body-lg": ["20px", {"lineHeight": "32px", "fontWeight": "300"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["48px", {"lineHeight": "48px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #000000; color: #ffffff; scroll-behavior: smooth; }
+        .glass-panel { 
+            background: rgba(10, 10, 10, 0.4); 
+            backdrop-filter: blur(24px); 
+            -webkit-backdrop-filter: blur(24px); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+        .text-glow { text-shadow: 0 0 20px rgba(217, 255, 0, 0.3); }
+        .bg-gradient-radial { background: radial-gradient(circle at center, var(--tw-gradient-from) 0%, var(--tw-gradient-to) 100%); }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #D9FF00; }
+
+        .reveal-up { animation: revealUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; transform: translateY(40px); }
+        @keyframes revealUp { to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="antialiased min-h-screen font-body-md overflow-x-hidden selection:bg-volt-accent selection:text-black">
+<!-- Sticky Header Placeholder -->
+<header class="fixed top-0 left-0 right-0 z-50 px-margin-mobile md:px-margin-desktop py-unit-4 flex justify-between items-center mix-blend-difference">
+<div class="font-display-xl text-2xl tracking-widest uppercase">TRAQA</div>
+<button class="font-label-sm uppercase hover:text-volt-accent transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="language">language</span>
+        EN
+    </button>
+</header>
+<main class="w-full">
+<!-- Cinematic Hero Section -->
+<section class="relative w-full h-[100svh] flex flex-col justify-center px-margin-mobile md:px-margin-desktop bg-black overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img alt="Abstract cellular biology in dark mode" class="w-full h-full object-cover opacity-60 mix-blend-screen scale-105 hover:scale-100 transition-transform duration-[10s]" data-alt="Microscopic view of cellular structures, glowing faintly in neon green/volt against a pitch-black background. High resolution, scientific but cinematic, abstract luxury." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxnk32re0JQuLUjzYL8QTUHnkvR-sLqykH4VwgM75hYInzHgC2YpjBMg0vO89roNE_-lxlUCffKie-66aEAURqsPqegh7EHZM9OFLtwIjqMHpAE2tgz8fuquMSSmkUUr2u1lrhK2kURCMZCFItuLXNy6-7CoGIc6V35eS9icwmYPL4z7o0Y3hV3Zu-zc5azuk85xCAWRb_ciTzB3dG9cnU9qWHJOr4IU7iVByrEYZQ6tvu1WsbSxqfcTJ_ph_2n4acY35WlEviElU"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent"></div>
+</div>
+<div class="relative z-10 max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<div class="col-span-1 md:col-span-10 lg:col-span-9 flex flex-col gap-unit-8 reveal-up">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-[1px] bg-volt-accent"></div>
+<span class="font-label-sm text-volt-accent uppercase tracking-[0.2em]">The Global Standard</span>
+</div>
+<h1 class="font-display-xl text-headline-lg-mobile md:text-[120px] leading-[0.85] text-white uppercase tracking-tighter mix-blend-difference">
+                        THE MEDICAL <br/>
+<span class="text-volt-accent text-glow mix-blend-normal">LITERACY</span> <br/>
+                        WE WERE IN <br/>
+                        DIRE NEED OF.
+                    </h1>
+<p class="font-body-lg text-body-lg text-neutral-300 max-w-2xl mt-unit-4">Traqa is the world's first AI-driven platform translating complex clinical data into clear, culturally localized human narratives. Because understanding your body is a fundamental human right.</p>
+<div class="pt-unit-8 flex flex-col sm:flex-row gap-6 items-start sm:items-center">
+<button class="bg-volt-accent text-black font-label-sm uppercase px-10 py-5 rounded-full hover:bg-white hover:scale-105 transition-all duration-500 flex items-center gap-3 w-fit shadow-[0_0_40px_rgba(217,255,0,0.3)]">
+<span class="material-symbols-outlined text-lg" data-icon="public">public</span>
+                            CHOOSE YOUR LANGUAGE
+                        </button>
+</div>
+</div>
+</div>
+<div class="absolute bottom-unit-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 opacity-50 animate-bounce">
+<span class="font-label-sm text-[10px] uppercase tracking-widest">Scroll to discover</span>
+<span class="material-symbols-outlined text-sm" data-icon="arrow_downward">arrow_downward</span>
+</div>
+</section>
+<!-- Immersive Storytelling: The Problem -->
+<section class="py-unit-24 md:py-unit-32 px-margin-mobile md:px-margin-desktop bg-black relative">
+<div class="max-w-7xl mx-auto w-full flex flex-col gap-unit-24">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter items-center">
+<div class="flex flex-col gap-unit-8 md:pr-unit-16">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-white uppercase tracking-tighter">
+                THE NOISE OF <br/> <span class="text-neutral-muted">RAW DATA.</span>
+</h2>
+<p class="font-body-lg text-inverse-primary">Modern medicine is built on complexity, often leaving patients in the dark. Endless acronyms and clinical jargon shouldn't stand between you and your health. You have the data; you deserve the narrative.</p>
+</div>
+<div class="relative h-[400px] md:h-[600px] rounded-3xl overflow-hidden glass-panel border-none group">
+<img alt="Confusing medical data" class="w-full h-full object-cover opacity-30 group-hover:opacity-50 transition-opacity duration-700 grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAojRe9Yo5bDX3dZ5n-m96PnuWeETrK5trScosX7Ip0Mj01nYf6eLQoMXlxaPsjjhjd-bSaLpirirSQHObgR21oLD9cNc3P1KXrNAiNDP1va2uBlMecxBtSWI1_X1CB5sY7WJ5aUP6d2tV1qQuHpXYTlqh2hS5PvvtJbOK6HPJfV4AAo1agakBY70AoZphc8RmQuGtly8ZvqBW4U1xXIJrRxBcf9-SmdXbGfqqqUJYuIBRGC1GefBEHo9yRe_Yk6xUM4wtL-yP11jU"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="text-white/20 font-mono text-[150px] font-bold blur-[4px]">HBA1C</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter items-center">
+<div class="order-2 md:order-1 relative h-[400px] md:h-[600px] rounded-3xl overflow-hidden glass-panel border-volt-accent/20 group">
+<img alt="Clear understanding" class="w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-700 mix-blend-luminosity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAufw4HO5NCc3sD1FuqKyS2RfsjDd7CHJVkBXKjmo5vWX6UkKn2u1tlefoV5P3hmvlwT3GFdup0uSJnC4CCKum5CRjTZSIN6d1-WjEVXVbXCNpX-aH0Qxtalkvl2NPR_MKCz8fydxfypVZhAn7pt7KPVMC7CZlMreGYn0lHhLPzQH6fI26_5Onpzd5r2CdQy1RDtGPoOPar2p4UAYGKMHd_OJFeszmfwpWgsmAI6NQGzV-k3kn4Yt7-S2pPfs5D0LWWECREs7Ff5ic"/>
+<div class="absolute inset-0 bg-gradient-to-tr from-volt-accent/10 to-transparent"></div>
+</div>
+<div class="order-1 md:order-2 flex flex-col gap-unit-8 md:pl-unit-16">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-volt-accent uppercase tracking-tighter text-glow">
+                THE CLARITY OF <br/> TRAQA.
+            </h2>
+<p class="font-body-lg text-inverse-primary">We use proprietary AI to translate complex reports into clear, human-readable stories. Medical literacy isn't just for doctors—it's a vital tool for every patient to understand their health without fear or waiting for an explanation.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Key Features Glass Grid -->
+<section class="py-unit-24 md:py-unit-32 px-margin-mobile md:px-margin-desktop bg-[#050505] relative overflow-hidden">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-volt-accent/5 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="max-w-7xl mx-auto w-full relative z-10">
+<div class="mb-unit-16 flex flex-col items-center text-center">
+<span class="font-label-sm text-volt-accent uppercase tracking-widest mb-4">Core Ecosystem</span>
+<h2 class="font-headline-md text-4xl md:text-5xl text-white uppercase tracking-tighter">THE ARCHITECTURE OF UNDERSTANDING</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8">
+<!-- Feature 1 -->
+<div class="glass-panel p-unit-8 md:p-unit-12 rounded-3xl flex flex-col gap-unit-6 hover:border-volt-accent/50 hover:-translate-y-2 transition-all duration-500 group">
+<div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-volt-accent group-hover:bg-volt-accent group-hover:text-black transition-colors duration-500">
+<span class="material-symbols-outlined text-3xl" data-icon="auto_stories">auto_stories</span>
+</div>
+<div>
+<h3 class="font-headline-md text-2xl text-white uppercase mb-3">Relatable Narratives</h3>
+<p class="font-body-md text-neutral-400">Translating clinical blood panels into clear, relatable stories that help you understand what your numbers actually mean for your daily life.</p>
+</div>
+</div>
+<!-- Feature 2 -->
+<div class="glass-panel p-unit-8 md:p-unit-12 rounded-3xl flex flex-col gap-unit-6 hover:border-volt-accent/50 hover:-translate-y-2 transition-all duration-500 group">
+<div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-volt-accent group-hover:bg-volt-accent group-hover:text-black transition-colors duration-500">
+<span class="material-symbols-outlined text-3xl" data-icon="language">language</span>
+</div>
+<div>
+<h3 class="font-headline-md text-2xl text-white uppercase mb-3">Global Localization</h3>
+<p class="font-body-md text-neutral-400">Insights delivered in your dialect. Complex medical concepts localized with cultural relevance and regional analogies across 50+ languages.</p>
+</div>
+</div>
+<!-- Feature 3 -->
+<div class="glass-panel p-unit-8 md:p-unit-12 rounded-3xl flex flex-col gap-unit-6 hover:border-volt-accent/50 hover:-translate-y-2 transition-all duration-500 group">
+<div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-volt-accent group-hover:bg-volt-accent group-hover:text-black transition-colors duration-500">
+<span class="material-symbols-outlined text-3xl" data-icon="vital_signs">vital_signs</span>
+</div>
+<div>
+<h3 class="font-headline-md text-2xl text-white uppercase mb-3">Mean Health Scoring</h3>
+<p class="font-body-md text-neutral-400">Distilling thousands of data points into a single, definitive metric representing your overall physical state, tracking progress over time.</p>
+</div>
+</div>
+<!-- Feature 4 -->
+<div class="glass-panel p-unit-8 md:p-unit-12 rounded-3xl flex flex-col gap-unit-6 hover:border-volt-accent/50 hover:-translate-y-2 transition-all duration-500 group">
+<div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-volt-accent group-hover:bg-volt-accent group-hover:text-black transition-colors duration-500">
+<span class="material-symbols-outlined text-3xl" data-icon="diversity_1">diversity_1</span>
+</div>
+<div>
+<h3 class="font-headline-md text-2xl text-white uppercase mb-3">Family Care Nodes</h3>
+<p class="font-body-md text-neutral-400">Simplified monitoring for your whole family. Keep track of your loved ones' health trends from one secure, interconnected dashboard.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- The Membership / Premium Offering -->
+<section class="py-unit-24 md:py-unit-32 px-margin-mobile md:px-margin-desktop bg-black">
+<div class="max-w-7xl mx-auto w-full glass-panel rounded-[40px] p-unit-8 md:p-unit-16 relative overflow-hidden border-volt-accent/30">
+<div class="absolute -top-32 -right-32 w-96 h-96 bg-volt-accent rounded-full filter blur-[150px] opacity-20"></div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-unit-16 items-center relative z-10">
+<div class="flex flex-col gap-8">
+<div>
+<div class="inline-block px-4 py-2 rounded-full border border-volt-accent/50 text-volt-accent font-label-sm uppercase mb-6">Exclusive Access</div>
+<h2 class="font-headline-lg text-5xl md:text-6xl text-white uppercase tracking-tighter mb-4">TRAQA <span class="text-volt-accent text-glow">PRIVATE</span></h2>
+<p class="font-body-lg text-neutral-400">For the proactive individual who demands absolute clarity and priority processing of their biometric data.</p>
+</div>
+<ul class="flex flex-col gap-6">
+<li class="flex items-start gap-4">
+<div class="mt-1 w-6 h-6 rounded-full bg-volt-accent/20 flex items-center justify-center shrink-0">
+<div class="w-2 h-2 rounded-full bg-volt-accent"></div>
+</div>
+<div>
+<h4 class="font-headline-md text-lg text-white uppercase">Priority Analysis Pipeline</h4>
+<p class="font-body-md text-neutral-500 mt-1">Instant parsing of complex medical reports.</p>
+</div>
+</li>
+<li class="flex items-start gap-4">
+<div class="mt-1 w-6 h-6 rounded-full bg-volt-accent/20 flex items-center justify-center shrink-0">
+<div class="w-2 h-2 rounded-full bg-volt-accent"></div>
+</div>
+<div>
+<h4 class="font-headline-md text-lg text-white uppercase">Unlimited Family Nodes</h4>
+<p class="font-body-md text-neutral-500 mt-1">Empower your entire lineage with knowledge.</p>
+</div>
+</li>
+<li class="flex items-start gap-4">
+<div class="mt-1 w-6 h-6 rounded-full bg-volt-accent/20 flex items-center justify-center shrink-0">
+<div class="w-2 h-2 rounded-full bg-volt-accent"></div>
+</div>
+<div>
+<h4 class="font-headline-md text-lg text-white uppercase">Direct Specialist Routing</h4>
+<p class="font-body-md text-neutral-500 mt-1">Prepare meaningful narratives for consultations.</p>
+</div>
+</li>
+</ul>
+<button class="bg-white text-black font-label-sm uppercase px-8 py-5 rounded-full hover:bg-volt-accent transition-colors duration-300 w-fit mt-4">CHOOSE YOUR LANGUAGE</button>
+</div>
+<div class="relative h-[500px] rounded-3xl overflow-hidden glass-panel border-white/10">
+<img alt="Premium aesthetic" class="w-full h-full object-cover filter grayscale contrast-125 mix-blend-overlay" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXSF7ZQzajCltjjB4MNyJHdkgbKKDYlUUYBTpqX32hnqGVi958wNs2VeUio1vVqzZwqHUv7oDJZIAssdbsLsyqr9AqWF98E1_XtO275sULWgDv6szH5O3ErhUnXIj5PoFA5-C7xP_ixY915xuc5RO2lGCprypZWU-WmDUE4XZOtsyySnRRvG8wVDH9eKartxuQWXg9xvdMWPkPn6sXsgyFC5tCgJesXHJ7jHi8Cj8sUiwk5QDA3fiGq32c6MJsxjJ02GDX4geIPpc"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Data Privacy -->
+<section class="py-unit-24 px-margin-mobile md:px-margin-desktop bg-[#0a0a0a] border-t border-white/5">
+<div class="max-w-4xl mx-auto flex flex-col items-center text-center gap-unit-8">
+<div class="w-24 h-24 rounded-full border border-volt-accent/30 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-4xl text-volt-accent" data-icon="enhanced_encryption">enhanced_encryption</span>
+</div>
+<h2 class="font-headline-md text-3xl md:text-4xl text-white uppercase tracking-tighter">THE BLACK BOX GUARANTEE</h2>
+<p class="font-body-lg text-neutral-400">Your health data belongs to you. Traqa provides military-grade security for every user because privacy isn't a luxury—it's a right. We decode your health to empower you, never to commodify your information.</p>
+</div>
+</section>
+<!-- Footer -->
+<footer class="py-unit-16 px-margin-mobile md:px-margin-desktop bg-black border-t border-white/10">
+<div class="max-w-7xl mx-auto flex flex-col gap-unit-12">
+<!-- Disclaimer -->
+<div class="p-6 rounded-2xl bg-white/5 border border-white/10 max-w-4xl">
+<p class="font-body-md text-sm text-neutral-500 leading-relaxed">
+<span class="font-bold text-neutral-400">Medical Disclaimer:</span> Traqa provides literacy and translation of medical data for educational and personal understanding purposes only. It is not a diagnostic tool and does not replace professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition.
+        </p>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-unit-8">
+<div>
+<span class="font-display-xl text-4xl text-white tracking-widest uppercase block mb-2 mix-blend-difference">TRAQA</span>
+<span class="font-label-sm text-neutral-600 uppercase tracking-widest">© 2026 Traqa Health Systems. All rights reserved.</span>
+</div>
+<div class="flex flex-wrap gap-x-8 gap-y-4">
+<a class="font-label-sm text-neutral-400 uppercase hover:text-volt-accent transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-neutral-400 uppercase hover:text-volt-accent transition-colors" href="#">Terms of Service</a>
+<a class="font-label-sm text-neutral-400 uppercase hover:text-volt-accent transition-colors" href="#">Contact</a>
+</div>
+</div>
+</div>
+</footer>
+</main>
+
+<script>
+// Flutter JavaScript bridge — all "CHOOSE YOUR LANGUAGE" buttons navigate to /language
+function onChooseLanguage() {
+  if (window.TraqaBridge) {
+    window.TraqaBridge.postMessage('navigateToLanguage');
+  }
+}
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('button').forEach(function(btn) {
+    if (btn.textContent.trim().includes('CHOOSE YOUR LANGUAGE')) {
+      btn.addEventListener('click', onChooseLanguage);
+    }
+  });
+});
+</script>
+</body></html>

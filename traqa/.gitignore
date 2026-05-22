@@ -1,0 +1,89 @@
+# ── Flutter SDK (NEVER commit) ────────────────────────────
+flutter/
+
+# ── Dependencies ──────────────────────────────────────────
+**/node_modules/
+.pub-cache/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# ── Build outputs ─────────────────────────────────────────
+/build/
+android/.gradle/
+android/build/
+android/app/debug/
+android/app/profile/
+android/app/release/
+ios/Flutter/.last_build_id
+*.apk
+*.aab
+*.ipa
+
+# ── IDE & Editor ──────────────────────────────────────────
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# ── OS files ──────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# ── Dart/Flutter generated ───────────────────────────────
+**/doc/api/
+.dart_tool/
+.pub/
+coverage/
+
+# ── Symbolication ─────────────────────────────────────────
+app.*.symbols
+app.*.map.json
+
+# ── Firebase / Secrets ────────────────────────────────────
+functions/.env
+android/key.properties
+android/local.properties
+service-account.json
+*.p12
+*.jks
+
+# ── Logs & Temp ──────────────────────────────────────────
+*.log
+*.pyc
+*.class
+*.pid
+migrate_working_dir/
+
+# ── Agent/Internal ────────────────────────────────────────
+.agents/
+.claude/
+.cursor/
+skills/
+skills-lock.json
+
+# ── Design refs / media (not app code) ────────────────────
+*.mp4
+*.mov
+*.zip
+*.png
+*.jpg
+*.jpeg
+code.html
+screen.png
+render_reel.py
+
+# ── Preview / Backup files ────────────────────────────────
+*_preview.html
+app_preview.html
+*_backup.dart
+*_mock.dart
+*_preview.dart
+pubspec_preview.yaml
+
+# ── Analysis reports ──────────────────────────────────────
+analysis_output*.txt
+final_analysis_result.txt
